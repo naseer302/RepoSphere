@@ -54,26 +54,37 @@ project-root/
 - Flask 3.0.3
 - Werkzeug 3.0.6
 - SQLite 3.42.0
+- blinker==1.8.2
+- click==8.1.7
+- colorama==0.4.6
+- itsdangerous==2.2.0
+- Jinja2==3.1.4
+- MarkupSafe==3.0.2
 
 ### Setup
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/student-repository-management.git
-   cd student-repository-management
+   git clone https://github.com/naseer302/student_repo_management.git
+   cd student_repo_management
    ```
 
 2. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
+   
+3. **Activate virtual environment:**
+   ```bash
+   ve\Scripts\activate
+   ```
 
-3. **Run the application:**
+4. **Run the application:**
    ```bash
    python app.py
    ```
 
-4. **Access the application:**
+5. **Access the application:**
    Open your web browser and navigate to `http://localhost:5000`.
 
 ---
@@ -97,10 +108,10 @@ project-root/
 ## 💻 Screenshots
 
 ### Landing Page
-![Landing Page](https://github.com/yourusername/student-repository-management/screenshots/landing-page.png)
+![Landing Page](no image yet)
 
 ### Repository Management
-![Repository Management](https://github.com/yourusername/student-repository-management/screenshots/repository-management.png)
+![Repository Management](no image yet)
 
 ---
 
@@ -126,12 +137,4 @@ Contributions are welcome! Feel free to open issues or submit pull requests for 
 
 ## 💬 Contact
 
-Created by **Your Name** – [Your Email](mailto:your.email@example.com)
-
----
-
-Thank you for using the **Student Repository Management System**! We hope this tool helps you manage your repository data with ease.
-
----
-
-This README provides everything a developer or user would need to get started with the project, from setup instructions to feature descriptions, and even potential future improvements.
+Created by **Naseer** – [Your Email](mailto:na5699577@gmail.com)
