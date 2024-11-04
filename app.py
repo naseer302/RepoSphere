@@ -16,5 +16,12 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Create the upload folder if it does
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
+# Define a User model
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
