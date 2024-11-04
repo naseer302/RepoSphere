@@ -22,6 +22,14 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
 
+# Define a Repository model
+class Repository(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(200))
+    file_paths = db.Column(db.String(500))  # Store paths of uploaded files
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
