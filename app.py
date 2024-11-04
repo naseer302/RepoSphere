@@ -3,9 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
+import secrets
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Set a secret key for session management
+session_key = secrets.token_hex(16)
+app.secret_key = session_key  # this is a secret key for session management
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///repositories.db'
 db = SQLAlchemy(app)
 
