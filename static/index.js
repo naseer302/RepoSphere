@@ -5,14 +5,14 @@
 
 document.getElementById("signupButton").onclick = function() {
     document.getElementById("signupModal").style.display = "block";
-    document.getElementById("loginModal").style.display = "none"; // Close login modal
+    document.getElementById("loginModal").style.display = "none";
 };
 
 // Close modals
 const closeButtons = document.getElementsByClassName("close");
 for (let button of closeButtons) {
     button.onclick = function() {
-        this.parentElement.parentElement.style.display = "none"; // Close the modal
+        this.parentElement.parentElement.style.display = "none"; 
     };
 }
 
@@ -32,7 +32,7 @@ document.getElementById("loginSubmit").onclick = function() {
         return response.json().then(data => {
             if (response.status === 200) {
                 alert(data.message);
-                window.location.href = '/repos-page'; // Redirect to repos page after login
+                window.location.href = '/repos-page'; 
             } else {
                 alert(data.message);
             }
@@ -57,7 +57,7 @@ document.getElementById("signupSubmit").onclick = function() {
         return response.json().then(data => {
             if (response.status === 201) {
                 alert(data.message);
-                document.getElementById("signupModal").style.display = "none"; // Close signup modal
+                document.getElementById("signupModal").style.display = "none";
             } else {
                 alert(data.message);
             }
