@@ -27,7 +27,7 @@ class Repository(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(200))
-    file_paths = db.Column(db.String(500))  # Store paths of uploaded files
+    file_paths = db.Column(db.String(500))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
