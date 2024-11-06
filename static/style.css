@@ -1,0 +1,43 @@
+
+.landing-page {
+    text-align: center;
+}
+
+.image-container {
+    margin: 20px 0;
+    
+}
+
+.main-image {
+    border-radius: 8px;
+    width: 53%;
+    height: 100%;
+    max-width: 600px;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #333;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Add any other global styles here */
