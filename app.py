@@ -30,6 +30,11 @@ class Repository(db.Model):
     file_paths = db.Column(db.String(500))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+# Create the database tables
+@app.before_request
+def create_tables():
+    db.create_all()
+
 # Handle user logout
 @app.route('/logout', methods=['POST'])
 def logout():
