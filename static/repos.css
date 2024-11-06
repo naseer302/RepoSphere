@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+}
+
+header h1 {
+    margin: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.search-button,
+.logout-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.logout-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+#repoManagement {
+    margin: 20px auto;
+    max-width: 90%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+.modern-table th,
+.modern-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.sort-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.sort-select,
+.sort-button {
+    padding: 5px;
+    border-radius: 4px;
+    margin-left: 5px;
+}
+
+.sort-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .modern-table {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 576px) {
+    .header-right {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
