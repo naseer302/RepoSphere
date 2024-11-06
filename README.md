@@ -31,7 +31,10 @@ project-root/
 │
 ├── instance             # Database File             
 ├── static/
-│   ├── script.js        # JavaScript Logic Handling, Frontend Interactivity And API
+│   ├── index.css        # Custom CSS Styling for index.html file        
+│   ├── index.js         # JavaScript Logic Handling, Frontend Interactivity And API for index.html file
+│   ├── repos.css        # Custom CSS Styling for repos.html file        
+│   ├── repos.js         # JavaScript Logic Handling, Frontend Interactivity And API for repos.html file
 │   └── Style.css        # Custom CSS Styling
 ├── templates/
 │   ├── index.html       # Landing Page With Login and Signup
