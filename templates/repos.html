@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Repositories</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/repos.css">
+</head>
+
+<body>
+    <header>
+        <div>
+            <img src="https://scontent.fbhv2-1.fna.fbcdn.net/v/t39.30808-6/449316984_860090959486355_7211239772672521907_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=QXA8_yyUiIoQ7kNvgF8UIsI&_nc_zt=23&_nc_ht=scontent.fbhv2-1.fna&_nc_gid=ATNYkbKdrTPGlp8dNvdP4VQ&oh=00_AYBDDqOOvelS3nA4cGtI9FSVFzfTf7q-3LzSMOh8tWbFog&oe=67274301"
+                height="60px" width="60px" style="border-radius: 8px;" alt="Logo">
+        </div>
+        <h1>Your Repositories</h1>
+        <div class="header-right">
+            <input type="text" id="searchInput" placeholder="Search Repositories..." class="search-input" />
+            <button id="searchButton" class="search-button">Search</button>
+            <button id="logoutButton" class="logout-button">Logout</button>
+        </div>
+    </header>
+
+    <div id="repoManagement">
+        <h2>Manage Your Repositories</h2>
+        <form id="addRepoForm" enctype="multipart/form-data">
+            <div class="input-group">
+                <input type="text" id="repoName" placeholder="Repository Name" required />
+            </div>
+            <div class="input-group">
+                <input type="text" id="repoDescription" placeholder="Repository Description" required />
+            </div>
+            <div class="input-group">
+                <input type="file" id="repoFile" webkitdirectory multiple required />
+            </div>
+            <div class="input-group">
+                <button type="button" class="loginButton" id="addRepoButton">Add Repository</button>
+            </div>
+        </form>
+
+        <table id="repoTable" class="modern-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>File</th>
+                    <th>Date Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="repoTableBody">
+                <!-- Repositories will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="sort-container">
+        <label for="sortOption" class="sort-label">Sort By:</label>
+        <select id="sortOption" class="sort-select">
+            <option value="id">Serial Number</option>
+            <option value="date">Date Created</option>
+        </select>
+        <button id="sortButton" class="sort-button">Sort</button>
+    </div>
+    <script src="/static/repos.js"></script>
+</body>
+
+</html>
