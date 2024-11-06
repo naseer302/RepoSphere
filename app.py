@@ -30,6 +30,12 @@ class Repository(db.Model):
     file_paths = db.Column(db.String(500))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+# Handle user logout
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.pop('user_id', None)
+    return jsonify({"message": "Logout successful"}), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)
