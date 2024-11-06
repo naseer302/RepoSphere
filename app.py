@@ -35,6 +35,11 @@ class Repository(db.Model):
 def create_tables():
     db.create_all()
 
+# Render the landing page
+@app.route('/')
+def index():
+    return render_template('index.html')
+    
 # Handle user logout
 @app.route('/logout', methods=['POST'])
 def logout():
