@@ -49,6 +49,17 @@ def login():
         session['user_id'] = user.id
         return jsonify({"message": "Login successful", "user_id": user.id}), 200
     return jsonify({"message": "Invalid email or password"}), 401
+
+# Handle user signup
+@app.route('/signup', methods=['POST'])
+def signup():
+    data = request.json
+    if User.query.filter_by(email=data['email']).first():
+        return jsonify({"message": "Email already exists"}), 409
+    new_user = User(email=data['email'], password=data['password'])  # Hash password in production
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({"message": "User registered successfully"}), 201
     
 # Handle user logout
 @app.route('/logout', methods=['POST'])
