@@ -39,6 +39,16 @@ def create_tables():
 @app.route('/')
 def index():
     return render_template('index.html')
+
+# Handle user login
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    user = User.query.filter_by(email=data['email'], password=data['password']).first()
+    if user:
+        session['user_id'] = user.id
+        return jsonify({"message": "Login successful", "user_id": user.id}), 200
+    return jsonify({"message": "Invalid email or password"}), 401
     
 # Handle user logout
 @app.route('/logout', methods=['POST'])
