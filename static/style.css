@@ -38,7 +38,25 @@ header {
     display: flex;
     align-items: center;
 }
-
+#loginButton {
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+#loginButton:hover{
+    background-color: red;
+}
+.loginButton, .signupButton {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 8px;
+}
 footer {
     text-align: center;
     padding: 10px;
