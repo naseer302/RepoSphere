@@ -21,6 +21,11 @@ body {
     background-color: #f4f4f4;
 }
 
+header h1 {
+    margin: 0
+    ;
+}
+
 header {
     display: flex;
     justify-content: space-between;
@@ -28,6 +33,10 @@ header {
     background: #333;
     color: white;
     padding: 10px 20px;
+}
+.header-right {
+    display: flex;
+    align-items: center;
 }
 
 footer {
