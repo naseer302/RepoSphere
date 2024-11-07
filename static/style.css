@@ -57,6 +57,22 @@ header {
     cursor: pointer;
     border-radius: 8px;
 }
+.logout-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #dc3545; /* Bootstrap danger color */
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.logout-button:hover {
+    background-color: #c82333; /* Darker shade on hover */
+    transform: translateY(-2px); /* Subtle lift effect */
+}
 footer {
     text-align: center;
     padding: 10px;
