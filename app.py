@@ -61,6 +61,13 @@ def signup():
     db.session.commit()
     return jsonify({"message": "User registered successfully"}), 201
     
+# Render the repo management page
+@app.route('/repos-page')
+def repos_page():
+    if 'user_id' in session:
+        return render_template('repos.html')
+    return redirect(url_for('index'))
+    
 # Handle user logout
 @app.route('/logout', methods=['POST'])
 def logout():
