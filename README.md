@@ -1,6 +1,6 @@
-# 🎓 Student Repository Management System
+# 🎓 RepoSphere
 
-Welcome to the **Student Repository Management System**! This web application allows students to securely manage and organize their repository data with a user-friendly interface. Built using Flask and SQLite for robust backend functionality and a modern, responsive UI, this project delivers a seamless experience for CRUD operations, searching, and sorting within repositories using javaScript API.
+Welcome to the **RepoSphere**! A Student Repository Management System web application which allows students to securely manage and organize their repository data with a user-friendly interface. Built using Flask and SQLite for robust backend functionality and a modern, responsive UI, this project delivers a seamless experience for CRUD operations, searching, and sorting within repositories using javaScript API.
 
 ---
 
@@ -68,8 +68,8 @@ project-root/
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/naseer302/student_repo_management.git
-   cd student_repo_management
+   git clone https://github.com/naseer302/RepoSphere.git
+   cd RepoSphere
    ```
 
 2. **Install dependencies:**
@@ -114,7 +114,7 @@ project-root/
 ![Landing Page](no image yet)
 
 ### Repository Management
-![Repository Management](no image yet)
+![RepoSphere](no image yet)
 
 ---
 
