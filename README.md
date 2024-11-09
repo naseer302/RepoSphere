@@ -1,6 +1,6 @@
 # 🎓 RepoSphere
 
-Welcome to the **RepoSphere**! A Student Repository Management System web application which allows students to securely manage and organize their repository data with a user-friendly interface. Built using Flask and SQLite for robust backend functionality and a modern, responsive UI, this project delivers a seamless experience for CRUD operations, searching, and sorting within repositories using javaScript API.
+Welcome to the **RepoSphere** A Student Repository Management System web application which allows students to securely manage and organize their repository data with a user-friendly interface. Built using Flask and SQLite for robust backend functionality and a modern, responsive UI, this project delivers a seamless experience for CRUD operations, searching, and sorting within repositories using javaScript API.
 
 ---
 
