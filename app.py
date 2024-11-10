@@ -67,6 +67,38 @@ def repos_page():
     if 'user_id' in session:
         return render_template('repos.html')
     return redirect(url_for('index'))
+
+# Handle User Profile 
+@app.route('/profile', methods=['GET', 'PUT'])
+def profile():
+    if 'user_id' not in session:
+        return jsonify({"message": "Unauthorized"}), 401
+
+    user_id = session['user_id']
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    if request.method == 'GET':
+        # Send current user email in the response
+        return jsonify({"email": user.email}), 200
+
+    elif request.method == 'PUT':
+        data = request.json
+        email = data.get('email')
+        password = data.get('password')
+
+        # Update email if provided
+        if email:
+            user.email = email
+        
+        # Update password only if provided
+        if password:
+            user.password = generate_password_hash(password)
+
+        db.session.commit()
+        return jsonify({"message": "Profile updated successfully."}), 200
+
     
 # Handle user logout
 @app.route('/logout', methods=['POST'])
