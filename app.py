@@ -99,6 +99,61 @@ def profile():
         db.session.commit()
         return jsonify({"message": "Profile updated successfully."}), 200
 
+#repo add, update funtionality with searching and sorting
+@app.route('/repos', methods=['GET', 'POST'])
+def manage_repos():
+    if 'user_id' not in session:
+        return jsonify({"message": "Unauthorized"}), 401
+
+    user_id = session['user_id']
+    
+    if request.method == 'GET':
+        sort_by = request.args.get('sort_by', 'id')
+        search_term = request.args.get('search', '').lower()
+
+        query = Repository.query.filter_by(user_id=user_id)  # Filter by user ID
+        if search_term:
+            query = query.filter((Repository.name.ilike(f'%{search_term}%')) | 
+                                 (Repository.description.ilike(f'%{search_term}%')))
+
+        if sort_by == 'date':
+            repos = query.order_by(Repository.created_at.desc()).all()
+        else:
+            repos = query.order_by(Repository.id).all()
+
+        return jsonify([{
+            "id": repo.id, 
+            "name": repo.name, 
+            "description": repo.description, 
+            "file_paths": repo.file_paths,
+            "created_at": repo.created_at.strftime('%Y-%m-%d %H:%M:%S')
+        } for repo in repos])
+    
+    elif request.method == 'POST':
+        name = request.form.get('name')
+        description = request.form.get('description')
+        file_paths = []
+
+        if 'files[]' not in request.files:
+            return jsonify({"message": "No files uploaded"}), 400
+
+        for file in request.files.getlist('files[]'):
+            filename = secure_filename(file.filename)
+            save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(save_path)
+            file_paths.append(save_path)
+
+        new_repo = Repository(
+            name=name, 
+            description=description,
+            file_paths=",".join(file_paths),
+            user_id=user_id  # Associate the repository with the logged-in user
+        )
+        db.session.add(new_repo)
+        db.session.commit()
+
+        return jsonify({"message": "Repository added successfully"}), 201
+
     
 # Handle user logout
 @app.route('/logout', methods=['POST'])
