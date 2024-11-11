@@ -59,6 +59,23 @@
  };
 
 
+ // Update repository
+ function updateRepo(id) {
+     const name = prompt("Enter new name:");
+     const description = prompt("Enter new description:");
+     if (name) {
+         fetch(`/repos/${id}`, {
+             method: 'PUT',
+             headers: { 'Content-Type': 'application/json' },
+             body: JSON.stringify({ name, description })
+         })
+             .then(response => response.json())
+             .then(data => {
+                 alert(data.message);
+                 loadRepositories();
+             });
+     }
+ }
  /// Handle User Profile Section
 
 document.addEventListener('DOMContentLoaded', function () {
