@@ -123,22 +123,42 @@ header {
     background-color: #0056b3;
 }
 
-.modern-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+.sort-container {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
 }
-.modern-table th, .modern-table td {
+
+.sort-label {
+    font-size: 1rem;
+    margin-right: 10px;
+    color: #333;
+}
+
+.sort-select {
     padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    font-size: 1rem;
+    margin-right: 10px;
+    transition: border-color 0.3s;
 }
-.modern-table th {
-    background-color: #007bff;
+
+.sort-select:focus {
+    border-color: #007BFF; /* Bootstrap primary color for focus */
+    outline: none; /* Remove default outline */
+}
+
+.sort-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF; /* Bootstrap primary color */
     color: white;
-}
-.modern-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .modal {
