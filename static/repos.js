@@ -20,6 +20,43 @@
      }
  };
 
+// Add repository functionality
+ document.getElementById("addRepoButton").onclick = function () {
+     const name = document.getElementById("repoName").value;
+     const description = document.getElementById("repoDescription").value;
+     const fileInput = document.getElementById("repoFile");
+
+     if (!name || !description || !fileInput.files.length) {
+         alert("Please fill all the fields and select a folder");
+         return;
+     }
+
+     const formData = new FormData();
+     formData.append('name', name);
+     formData.append('description', description);
+
+     Array.from(fileInput.files).forEach(file => {
+         formData.append('files[]', file);
+     });
+
+     fetch('/repos', {
+         method: 'POST',
+         body: formData
+     })
+         .then(response => response.json())
+         .then(data => {
+             alert(data.message);
+             loadRepositories();
+
+             document.getElementById("repoName").value = '';
+             document.getElementById("repoDescription").value = '';
+             fileInput.value = '';
+         })
+         .catch(error => {
+             console.error('Error:', error);
+             alert('An error occurred while adding the repository.');
+         });
+ };
 
 
  /// Handle User Profile Section
