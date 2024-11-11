@@ -104,6 +104,24 @@ header {
     background-color: #0056b3;
 }
 
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.modern-table th, .modern-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+.modern-table th {
+    background-color: #007bff;
+    color: white;
+}
+.modern-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
 .modal {
     display: none;
     position: fixed;
