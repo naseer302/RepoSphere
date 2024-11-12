@@ -227,5 +227,60 @@ footer {
     bottom: 0;
     width: 100%;
 }
+.sort-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    transform: translateY(-2px); /* Subtle lift effect */
+}
 
+.sort-button:active {
+    transform: translateY(1px); /* Slight drop effect when pressed */
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Modern Input Field Style */
+  .input-group input {
+    padding: 12px 15px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .input-group input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Submit Button Style */
+  .submit-btn {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 15px;
+    background-color: #4a90e2;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 15px auto;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #357ab8;
+  }
 /* Add any other global styles here */
