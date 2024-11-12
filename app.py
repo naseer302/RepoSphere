@@ -154,6 +154,29 @@ def manage_repos():
 
         return jsonify({"message": "Repository added successfully"}), 201
 
+@app.route('/repos/<int:repo_id>', methods=['DELETE', 'PUT'])
+def repo_actions(repo_id):
+    if 'user_id' not in session:
+        return jsonify({"message": "Unauthorized"}), 401
+
+    user_id = session['user_id']
+    repo = Repository.query.get(repo_id)
+
+    if not repo or repo.user_id != user_id:
+        return jsonify({"message": "Repository not found or not authorized"}), 404
+
+    if request.method == 'DELETE':
+        db.session.delete(repo)
+        db.session.commit()
+        return jsonify({"message": "Repository deleted successfully"}), 200
+    
+    elif request.method == 'PUT':
+        data = request.json
+        repo.name = data['name']
+        repo.description = data['description']
+        db.session.commit()
+        return jsonify({"message": "Repository updated successfully"}), 200
+
     
 # Handle user logout
 @app.route('/logout', methods=['POST'])
