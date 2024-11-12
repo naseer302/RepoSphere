@@ -142,6 +142,22 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('Error updating profile:', error));
     });
 
+   
+ // Delete repository
+ function deleteRepo(id) {
+     if (confirm("Are you sure you want to Delete this Repo?")){
+     fetch(`/repos/${id}`, { method: 'DELETE' })
+         .then(response => response.json())
+         .then(data => {
+             alert(data.message);
+             loadRepositories();
+         });
+     }
+     else{
+         console.log("Canceled");
+     }
+ }
+
     // Delete account
     deleteAccountButton.addEventListener('click', () => {
         if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
