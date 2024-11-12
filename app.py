@@ -80,7 +80,6 @@ def profile():
         return jsonify({"message": "User not found"}), 404
 
     if request.method == 'GET':
-        # Send current user email in the response
         return jsonify({"email": user.email}), 200
 
     elif request.method == 'PUT':
@@ -111,7 +110,7 @@ def manage_repos():
         sort_by = request.args.get('sort_by', 'id')
         search_term = request.args.get('search', '').lower()
 
-        query = Repository.query.filter_by(user_id=user_id)  # Filter by user ID
+        query = Repository.query.filter_by(user_id=user_id)
         if search_term:
             query = query.filter((Repository.name.ilike(f'%{search_term}%')) | 
                                  (Repository.description.ilike(f'%{search_term}%')))
@@ -147,7 +146,7 @@ def manage_repos():
             name=name, 
             description=description,
             file_paths=",".join(file_paths),
-            user_id=user_id  # Associate the repository with the logged-in user
+            user_id=user_id
         )
         db.session.add(new_repo)
         db.session.commit()
@@ -177,7 +176,6 @@ def repo_actions(repo_id):
         db.session.commit()
         return jsonify({"message": "Repository updated successfully"}), 200
 
-    
 # Handle user logout
 @app.route('/logout', methods=['POST'])
 def logout():
@@ -187,3 +185,4 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
