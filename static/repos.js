@@ -158,6 +158,47 @@ document.addEventListener('DOMContentLoaded', function () {
      }
  }
 
+  function loadRepositories(sortBy = 'id', searchTerm = '') {
+     const fetchUrl = `/repos?sort_by=${sortBy}&search=${encodeURIComponent(searchTerm)}`;
+
+     fetch(fetchUrl)
+         .then(response => response.json())
+         .then(repositories => {
+             const tbody = document.getElementById("repoTableBody");
+             tbody.innerHTML = '';
+
+             repositories.forEach((repo, index) => {
+                 const serialNumber = index + 1;
+                 const filePreviews = repo.file_paths ? repo.file_paths.split(',').map(file => {
+                     const fileType = file.split('.').pop();
+                     if (['jpg', 'jpeg', 'png', 'gif'].includes(fileType)) {
+                         return `<a href="${file.trim()}" download><img src="${file.trim()}" alt="${file.trim()}" style="width: 50px; height: auto; margin-right: 5px;" /></a>`;
+                     } else {
+                         return `<a href="${file.trim()}" download><span>${file.trim().split('/').pop()}</span></a>`;
+                     }
+                 }).join('') : 'No files uploaded';
+
+                 const row = `<tr>
+                     <td>${serialNumber}</td>
+                     <td>${repo.name}</td>
+                     <td>${repo.description}</td>
+                     <td>${filePreviews}</td>
+                     <td>${repo.created_at}</td>
+                     <td>
+                         <button class="btn" onclick="deleteRepo(${repo.id})">Delete</button>
+                         <button class="btn" onclick="updateRepo(${repo.id})">Update</button>
+                     </td>
+                 </tr>`;
+                 tbody.innerHTML += row;
+             });
+         })
+         .catch(error => {
+             console.error('Error loading repositories:', error);
+             alert('Failed to load repositories. Please try again.');
+         });
+ }
+ 
+
     // Delete account
     deleteAccountButton.addEventListener('click', () => {
         if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
