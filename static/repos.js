@@ -1,94 +1,122 @@
- // Load repositories when the page loads
- window.onload = loadRepositories;
+window.onload = loadRepositories;
 
- // Logout functionality
- document.getElementById("logoutButton").onclick = function () {
-     // Prompt the user for confirmation
-     if (confirm("Are you sure you want to log out?")) {
-         fetch('/logout', { method: 'POST' })
-             .then(response => response.json())
-             .then(data => {
-                 alert(data.message);
-                 window.location.href = '/'; // Redirect to landing page
-             })
-             .catch(error => {
-                 alert("Logout failed: " + error.message); // Show error if the logout fails
-             });
-     } else {
-         // User canceled the logout action
-         console.log("Logout canceled");
-     }
- };
+// Logout functionality
+document.getElementById("logoutButton").onclick = function () {
+    if (confirm("Are you sure you want to log out?")) {
+        fetch('/logout', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                window.location.href = '/';
+            })
+            .catch(error => alert("Logout failed: " + error.message));
+    }
+};
 
 // Add repository functionality
- document.getElementById("addRepoButton").onclick = function () {
-     const name = document.getElementById("repoName").value;
-     const description = document.getElementById("repoDescription").value;
-     const fileInput = document.getElementById("repoFile");
+document.getElementById("addRepoButton").onclick = function () {
+    const name = document.getElementById("repoName").value;
+    const description = document.getElementById("repoDescription").value;
+    const fileInput = document.getElementById("repoFile");
 
-     if (!name || !description || !fileInput.files.length) {
-         alert("Please fill all the fields and select a folder");
-         return;
-     }
+    if (!name || !description || !fileInput.files.length) {
+        alert("Please fill all the fields and select files");
+        return;
+    }
 
-     const formData = new FormData();
-     formData.append('name', name);
-     formData.append('description', description);
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('description', description);
+    Array.from(fileInput.files).forEach(file => formData.append('files[]', file));
 
-     Array.from(fileInput.files).forEach(file => {
-         formData.append('files[]', file);
-     });
+    fetch('/repos', { method: 'POST', body: formData })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            loadRepositories();
+            document.getElementById("repoName").value = '';
+            document.getElementById("repoDescription").value = '';
+            fileInput.value = '';
+        })
+        .catch(error => alert('Error adding repository: ' + error.message));
+};
 
-     fetch('/repos', {
-         method: 'POST',
-         body: formData
-     })
-         .then(response => response.json())
-         .then(data => {
-             alert(data.message);
-             loadRepositories();
+// Load repositories with sorting and searching
+document.getElementById("sortButton").onclick = function () {
+    const sortBy = document.getElementById("sortOption").value;
+    loadRepositories(sortBy);
+};
 
-             document.getElementById("repoName").value = '';
-             document.getElementById("repoDescription").value = '';
-             fileInput.value = '';
-         })
-         .catch(error => {
-             console.error('Error:', error);
-             alert('An error occurred while adding the repository.');
-         });
- };
+document.getElementById("searchButton").onclick = function () {
+    const searchTerm = document.getElementById("searchInput").value;
+    loadRepositories(undefined, searchTerm);
+};
+
+function loadRepositories(sortBy = 'id', searchTerm = '') {
+    const fetchUrl = `/repos?sort_by=${sortBy}&search=${encodeURIComponent(searchTerm)}`;
+    fetch(fetchUrl)
+        .then(response => response.json())
+        .then(repositories => {
+            const tbody = document.getElementById("repoTableBody");
+            tbody.innerHTML = '';
+
+            repositories.forEach((repo, index) => {
+                const filePreviews = repo.file_paths ? repo.file_paths.split(',').map(file => {
+                    const fileName = file.split('/').pop();  // Get file name
+                    return `<a href="/${file}" download>${fileName}</a>`;
+                }).join('<br>') : '';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${repo.name}</td>
+                        <td>${repo.description}</td>
+                        <td>${filePreviews}</td>
+                        <td>${repo.created_at}</td>
+                        <td>
+                            <button class="update-button" onclick="editRepo(${repo.id})">Update</button>
+                            <button class="delete-button" onclick="deleteRepo(${repo.id})">Delete</button>
+                        </td>
+                    </tr>`;
+            });
+        })
+        .catch(error => alert('Error loading repositories: ' + error.message));
+}
 
 
- // Update repository
- function updateRepo(id) {
-     const name = prompt("Enter new name:");
-     const description = prompt("Enter new description:");
-     if (name) {
-         fetch(`/repos/${id}`, {
-             method: 'PUT',
-             headers: { 'Content-Type': 'application/json' },
-             body: JSON.stringify({ name, description })
-         })
-             .then(response => response.json())
-             .then(data => {
-                 alert(data.message);
-                 loadRepositories();
-             });
-     }
- }
+function editRepo(repoId) {
+    const name = prompt("Enter new repository name:");
+    const description = prompt("Enter new repository description:");
 
-  document.getElementById("sortButton").onclick = function () {
-     const sortBy = document.getElementById("sortOption").value;
-     loadRepositories(sortBy);
- };
+    if (!name || !description) {
+        alert("Name and description are required.");
+        return;
+    }
 
-  document.getElementById("searchButton").onclick = function () {
-     const searchTerm = document.getElementById("searchInput").value;
-     loadRepositories(undefined, searchTerm);
- };
+    fetch(`/repos/${repoId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, description })
+    })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            loadRepositories();
+        })
+        .catch(error => alert('Error editing repository: ' + error.message));
+}
 
- /// Handle User Profile Section
+function deleteRepo(repoId) {
+    if (!confirm("Are you sure you want to delete this repository?")) return;
 
+    fetch(`/repos/${repoId}`, { method: 'DELETE' })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            loadRepositories();
+        })
+        .catch(error => alert('Error deleting repository: ' + error.message));
+}
 document.addEventListener('DOMContentLoaded', function () {
     const profileButton = document.getElementById('profileButton');
     const profileModal = document.getElementById('profileModal');
@@ -153,63 +181,6 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('Error updating profile:', error));
     });
 
-   
- // Delete repository
- function deleteRepo(id) {
-     if (confirm("Are you sure you want to Delete this Repo?")){
-     fetch(`/repos/${id}`, { method: 'DELETE' })
-         .then(response => response.json())
-         .then(data => {
-             alert(data.message);
-             loadRepositories();
-         });
-     }
-     else{
-         console.log("Canceled");
-     }
- }
-
-  function loadRepositories(sortBy = 'id', searchTerm = '') {
-     const fetchUrl = `/repos?sort_by=${sortBy}&search=${encodeURIComponent(searchTerm)}`;
-
-     fetch(fetchUrl)
-         .then(response => response.json())
-         .then(repositories => {
-             const tbody = document.getElementById("repoTableBody");
-             tbody.innerHTML = '';
-
-             repositories.forEach((repo, index) => {
-                 const serialNumber = index + 1;
-                 const filePreviews = repo.file_paths ? repo.file_paths.split(',').map(file => {
-                     const fileType = file.split('.').pop();
-                     if (['jpg', 'jpeg', 'png', 'gif'].includes(fileType)) {
-                         return `<a href="${file.trim()}" download><img src="${file.trim()}" alt="${file.trim()}" style="width: 50px; height: auto; margin-right: 5px;" /></a>`;
-                     } else {
-                         return `<a href="${file.trim()}" download><span>${file.trim().split('/').pop()}</span></a>`;
-                     }
-                 }).join('') : 'No files uploaded';
-
-                 const row = `<tr>
-                     <td>${serialNumber}</td>
-                     <td>${repo.name}</td>
-                     <td>${repo.description}</td>
-                     <td>${filePreviews}</td>
-                     <td>${repo.created_at}</td>
-                     <td>
-                         <button class="btn" onclick="deleteRepo(${repo.id})">Delete</button>
-                         <button class="btn" onclick="updateRepo(${repo.id})">Update</button>
-                     </td>
-                 </tr>`;
-                 tbody.innerHTML += row;
-             });
-         })
-         .catch(error => {
-             console.error('Error loading repositories:', error);
-             alert('Failed to load repositories. Please try again.');
-         });
- }
- 
-
     // Delete account
     deleteAccountButton.addEventListener('click', () => {
         if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
@@ -217,12 +188,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' }
             })
-            .then(response => response.json())
+            .then(response => response.text()) // Get the raw response as text
             .then(data => {
-                alert(data.message);
-                window.location.href = '/'; // Redirect to the homepage after deletion
+                console.log('Raw response:', data); // Log the raw response
+                try {
+                    const jsonData = JSON.parse(data); // Attempt to parse the JSON
+                    alert(jsonData.message);
+                    window.location.href = '/'; // Redirect to the homepage after deletion
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                    alert('An error occurred while deleting the account. Please try again.');
+                }
             })
-            .catch(error => console.error('Error deleting account:', error));
+            .catch(error => console.error('Deletion is not Allowed: Please Make Sure All The Added Repositories Must be Deletion Before Deletion of Your Account !'));
         }
     });
+   
 });
