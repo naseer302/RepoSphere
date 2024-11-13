@@ -76,6 +76,12 @@
              });
      }
  }
+
+  document.getElementById("sortButton").onclick = function () {
+     const sortBy = document.getElementById("sortOption").value;
+     loadRepositories(sortBy);
+ };
+
  /// Handle User Profile Section
 
 document.addEventListener('DOMContentLoaded', function () {
