@@ -82,6 +82,11 @@
      loadRepositories(sortBy);
  };
 
+  document.getElementById("searchButton").onclick = function () {
+     const searchTerm = document.getElementById("searchInput").value;
+     loadRepositories(undefined, searchTerm);
+ };
+
  /// Handle User Profile Section
 
 document.addEventListener('DOMContentLoaded', function () {
