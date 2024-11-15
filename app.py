@@ -7,7 +7,7 @@ from datetime import datetime
 import secrets
 
 app = Flask(__name__)
-app.secret_key = secrets.token_hex(16)  # Secret key for session management
+app.secret_key = secrets.token_hex(16)  # this is my secret key to maintain session across the RepoShpere 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///repositories.db'
 db = SQLAlchemy(app)
 
@@ -15,13 +15,13 @@ UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# User model
+# this is my user model to store user data
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
 
-# Repository model with user association
+# this is my repos model to store repos data
 class Repository(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -31,17 +31,17 @@ class Repository(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('repositories', lazy=True))
 
-# Database initialization
+# this will create all tables on the RepoSphere start if not created yet
 @app.before_request
 def create_tables():
     db.create_all()
 
-# Landing page
+# this is the landing page route of repoSphere
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# User signup
+# this is the signup page route of repoSphere
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.json
@@ -54,7 +54,7 @@ def signup():
     db.session.commit()
     return jsonify({"message": "User registered successfully"}), 201
 
-# User login
+# this is the login page route of repoSphere
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
@@ -66,6 +66,7 @@ def login():
 
     return jsonify({"message": "Invalid email or password"}), 401
 
+# this is the profile Modal route of repoSphere
 @app.route('/profile', methods=['GET', 'PUT', 'DELETE'])
 def profile():
     if 'user_id' not in session:
@@ -91,18 +92,14 @@ def profile():
             if not user:
                 return jsonify({"message": "User not found"}), 404
             
-            # Log the user info before deletion (for debugging)
-            print(f"Attempting to delete user: {user.email}")
-            
             db.session.delete(user)
             db.session.commit()
             session.pop('user_id', None)
             return jsonify({"message": "Account deleted successfully"}), 200
         except Exception as e:
-            print(f"Error deleting account: {e}")  # Log the error for debugging
             return jsonify({"message": f"Deletion is not Allowed: Please Make Sure All The Added Repositories Must be Deleted Before Deletion of Your Account !"}), 500
 
-# Repository management
+# this is the repos management page route of repoSphere
 @app.route('/repos', methods=['GET', 'POST'])
 def manage_repos():
     if 'user_id' not in session:
@@ -143,7 +140,7 @@ def manage_repos():
         db.session.commit()
         return jsonify({"message": "Repository added successfully"}), 201
 
-# Repository actions (update, delete)
+# # this is the Update and delete Action route of repoSphere
 @app.route('/repos/<int:repo_id>', methods=['PUT', 'DELETE'])
 def repo_actions(repo_id):
     if 'user_id' not in session:
@@ -164,13 +161,12 @@ def repo_actions(repo_id):
         db.session.commit()
         return jsonify({"message": "Repository updated successfully"}), 200
 
-# User logout
+# this is the logout functionality route of repoSphere
 @app.route('/logout', methods=['POST'])
 def logout():
     session.pop('user_id', None)
     return jsonify({"message": "Logout successful"}), 200
 
-# Repo management page
 @app.route('/repos-page')
 def repos_page():
     if 'user_id' in session:
