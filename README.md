@@ -111,10 +111,10 @@ project-root/
 ## 💻 Screenshots
 
 ### Landing Page
-(![Landing Page](https://github.com/user-attachments/assets/849f2839-e5a7-483c-b0ca-7bc0f51cae5c))
+![Landing Page](https://github.com/user-attachments/assets/849f2839-e5a7-483c-b0ca-7bc0f51cae5c)
 
 ### Repository Management
-(![Repos Page](https://github.com/user-attachments/assets/08c15eea-a6ac-4c43-8334-1c06659f468f))
+![Repos Page](https://github.com/user-attachments/assets/08c15eea-a6ac-4c43-8334-1c06659f468f)
 
 ---
 
