@@ -1,4 +1,4 @@
- // Show modals
+ // this will Show modals
  document.getElementById("loginButton").onclick = function() {
     document.getElementById("loginModal").style.display = "block";
 };
@@ -8,7 +8,7 @@ document.getElementById("signupButton").onclick = function() {
     document.getElementById("loginModal").style.display = "none";
 };
 
-// Close modals
+// this will Close modals
 const closeButtons = document.getElementsByClassName("close");
 for (let button of closeButtons) {
     button.onclick = function() {
@@ -16,7 +16,7 @@ for (let button of closeButtons) {
     };
 }
 
-// Login functionality
+// this is my Login functionality
 document.getElementById("loginSubmit").onclick = function() {
     const email = document.getElementById("loginEmail").value;
     const password = document.getElementById("loginPassword").value;
@@ -40,7 +40,7 @@ document.getElementById("loginSubmit").onclick = function() {
     });
 };
 
-// Signup functionality
+// this is my Signup functionality
 document.getElementById("signupSubmit").onclick = function() {
     const username = document.getElementById("signupUsername").value;
     const email = document.getElementById("signupEmail").value;

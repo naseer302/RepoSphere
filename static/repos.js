@@ -1,6 +1,6 @@
 window.onload = loadRepositories;
 
-// Logout functionality
+// this is my Logout functionality
 document.getElementById("logoutButton").onclick = function () {
     if (confirm("Are you sure you want to log out?")) {
         fetch('/logout', { method: 'POST' })
@@ -13,7 +13,7 @@ document.getElementById("logoutButton").onclick = function () {
     }
 };
 
-// Add repository functionality
+// this is my Add repository functionality
 document.getElementById("addRepoButton").onclick = function () {
     const name = document.getElementById("repoName").value;
     const description = document.getElementById("repoDescription").value;
@@ -41,7 +41,7 @@ document.getElementById("addRepoButton").onclick = function () {
         .catch(error => alert('Error adding repository: ' + error.message));
 };
 
-// Load repositories with sorting and searching
+// this is my Load repositories with sorting and searching functionality 
 document.getElementById("sortButton").onclick = function () {
     const sortBy = document.getElementById("sortOption").value;
     loadRepositories(sortBy);
@@ -83,7 +83,7 @@ function loadRepositories(sortBy = 'id', searchTerm = '') {
         .catch(error => alert('Error loading repositories: ' + error.message));
 }
 
-
+// this is my edit repo functionality 
 function editRepo(repoId) {
     const name = prompt("Enter new repository name:");
     const description = prompt("Enter new repository description:");
@@ -117,6 +117,8 @@ function deleteRepo(repoId) {
         })
         .catch(error => alert('Error deleting repository: ' + error.message));
 }
+
+// this is my profile related js
 document.addEventListener('DOMContentLoaded', function () {
     const profileButton = document.getElementById('profileButton');
     const profileModal = document.getElementById('profileModal');
@@ -126,18 +128,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
 
-    // Open profile modal
+    // this will Open profile modal
     profileButton.addEventListener('click', () => {
         fetchProfileData();
         profileModal.style.display = 'block';
     });
 
-    // Close profile modal
+    // this will Close profile modal
     closeModal.addEventListener('click', () => {
         profileModal.style.display = 'none';
     });
 
-    // Fetch and display profile data
+    // his will Fetch and display profile data
     function fetchProfileData() {
         fetch('/profile', {
             method: 'GET',
@@ -152,17 +154,13 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('Error fetching profile data:', error));
     }
 
-    // Update profile data
+    // this will Update profile data
     updateProfileButton.addEventListener('click', () => {
         const email = emailInput.value;
         const password = passwordInput.value;
-
-        // Only include fields with values
         const updateData = {};
         if (email) updateData.email = email;
         if (password) updateData.password = password;
-
-        // Check if there's anything to update
         if (Object.keys(updateData).length === 0) {
             alert("No updates were provided.");
             return;
@@ -181,20 +179,20 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('Error updating profile:', error));
     });
 
-    // Delete account
+    // this will Delete account
     deleteAccountButton.addEventListener('click', () => {
         if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
             fetch('/profile', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' }
             })
-            .then(response => response.text()) // Get the raw response as text
+            .then(response => response.text())
             .then(data => {
-                console.log('Raw response:', data); // Log the raw response
+                console.log('Raw response:', data);
                 try {
-                    const jsonData = JSON.parse(data); // Attempt to parse the JSON
+                    const jsonData = JSON.parse(data);
                     alert(jsonData.message);
-                    window.location.href = '/'; // Redirect to the homepage after deletion
+                    window.location.href = '/';
                 } catch (error) {
                     console.error('Error parsing JSON:', error);
                     alert('An error occurred while deleting the account. Please try again.');
