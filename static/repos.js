@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert('An error occurred while deleting the account. Please try again.');
                 }
             })
-            .catch(error => console.error('Deletion is not Allowed: Please Make Sure All The Added Repositories Must be Deletion Before Deletion of Your Account !'));
+            .catch(error => console.error('Deletion is not Allowed: Please Make Sure All The Added Repositories Must be Deleted Before Deletion of Your Account !'));
         }
     });
    
